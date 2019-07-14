@@ -34,16 +34,15 @@ class ChangePayloadFragment: Fragment(R.layout.change_payload_fragment) {
         planetAdapter.submitList(dataset)
     }
 
-    private fun onClickPlanet(planetData: PlanetUIData) {
+    private fun onClickPlanet(clickedPlanetData: PlanetUIData) {
         val currentDataSet = planetAdapter.currentList
-        val clickedPlanet = currentDataSet.find { it.name == planetData.name }!!
 
         // Update selected state
-        val updatedPlanet = clickedPlanet.copy(isSelected = !clickedPlanet.isSelected)
+        val updatedPlanet = clickedPlanetData.copy(isSelected = !clickedPlanetData.isSelected)
 
         val updatedDataset =
             currentDataSet
-                .filter { it != clickedPlanet } // Remove the clicked planet
+                .filter { it != clickedPlanetData } // Remove the clicked planet
                 .toMutableList()
                 .apply { add(updatedPlanet) } // Add the new updated clicked planet
                 .sortedBy { it.order } // Re-sort the list
