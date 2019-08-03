@@ -9,28 +9,10 @@
         tools:context=".MainActivity">
 
     <com.google.android.material.tabs.TabLayout
+            style="@style/Widget.MaterialComponents.TabLayout.Colored"
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_notify_dataset_changed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Notify Dataset Changed"/>
-
-        <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_diff_util"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Diff Util"/>
-
-        <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_change_payload"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Change Payload"/>
-
-    </com.google.android.material.tabs.TabLayout>
+            android:layout_height="wrap_content"
+             />
 
 </androidx.viewpager.widget.ViewPager>

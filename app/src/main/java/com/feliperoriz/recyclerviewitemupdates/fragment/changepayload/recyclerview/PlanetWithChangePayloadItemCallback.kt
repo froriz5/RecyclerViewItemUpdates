@@ -14,6 +14,6 @@ class PlanetWithChangePayloadItemCallback: DiffUtil.ItemCallback<PlanetUIData>()
     }
 
     override fun getChangePayload(oldItem: PlanetUIData, newItem: PlanetUIData): Any? {
-        return newItem
+        return PlanetDataChangePayload(newItem)
     }
 }

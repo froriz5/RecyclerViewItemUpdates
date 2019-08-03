@@ -33,13 +33,15 @@ class ChangePayloadAdapter(itemCallback: PlanetWithChangePayloadItemCallback,
     override fun onBindViewHolder(holder: PlanetViewHolder, position: Int, payloads: MutableList<Any>) {
         if (payloads.isEmpty()) super.onBindViewHolder(holder, position, payloads)
         else {
-            val payload = payloads.find { it is PlanetDataChangePayload } as PlanetDataChangePayload
+            payloads.find { it is PlanetDataChangePayload }?.let {
+                val payload = it as PlanetDataChangePayload
 
-            val planetData = payload.planetData
+                val planetData = payload.planetData
 
-            holder.apply {
-                bindSelected(planetData.isSelected)
-                setClickListener { onClickPlanet(planetData) }
+                holder.apply {
+                    bindSelected(planetData.isSelected)
+                    setClickListener { onClickPlanet(planetData) }
+                }
             }
         }
     }

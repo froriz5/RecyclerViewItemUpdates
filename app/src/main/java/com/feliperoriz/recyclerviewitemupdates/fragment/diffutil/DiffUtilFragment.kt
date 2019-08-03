@@ -20,6 +20,8 @@ class DiffUtilFragment: Fragment(R.layout.diff_util_fragment) {
     }
 
     private fun setup() {
+        setupClickListeners()
+
         val itemCallback = PlanetItemCallback()
         planetAdapter = DiffUtilAdapter(itemCallback, layoutInflater)
         planetAdapter.onClickPlanet = this::onClickPlanet
@@ -34,6 +36,15 @@ class DiffUtilFragment: Fragment(R.layout.diff_util_fragment) {
         planetAdapter.submitList(dataset)
     }
 
+    private fun setupClickListeners() {
+        select_all_button.setOnClickListener {
+            selectAllPlanets()
+        }
+        deselect_all_button.setOnClickListener {
+            deselectAllPlanets()
+        }
+    }
+
     private fun onClickPlanet(clickedPlanetData: PlanetUIData) {
         val currentDataSet = planetAdapter.currentList
 
@@ -45,6 +56,26 @@ class DiffUtilFragment: Fragment(R.layout.diff_util_fragment) {
                 .filter { it != clickedPlanetData } // Remove the clicked planet
                 .toMutableList()
                 .apply { add(updatedPlanet) } // Add the new updated clicked planet
+                .sortedBy { it.order } // Re-sort the list
+
+        planetAdapter.submitList(updatedDataset)
+    }
+
+    private fun selectAllPlanets() {
+        bulkSelectPlanets(true)
+    }
+
+    private fun deselectAllPlanets() {
+        bulkSelectPlanets(false)
+    }
+
+    private fun bulkSelectPlanets(shouldSelect: Boolean) {
+        val currentDataSet = planetAdapter.currentList
+
+
+        val updatedDataset =
+            currentDataSet
+                .map { it.copy(isSelected = shouldSelect) }
                 .sortedBy { it.order } // Re-sort the list
 
         planetAdapter.submitList(updatedDataset)

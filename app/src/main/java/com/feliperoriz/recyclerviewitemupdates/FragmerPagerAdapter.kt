@@ -18,6 +18,14 @@ class FragmentPagerAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm, B
         }
     }
 
+    override fun getPageTitle(position: Int): CharSequence? {
+        return when (position) {
+            0 -> "Notify Dataset Changed"
+            1 -> "Diff Util"
+            else -> "Change Payload"
+        }
+    }
+
     override fun getCount(): Int = 3
 
 }

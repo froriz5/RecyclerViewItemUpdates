@@ -19,6 +19,8 @@ class NotifyDataSetChangedFragment: Fragment(R.layout.notify_dataset_changed_fra
     }
 
     private fun setup() {
+        setupClickListeners()
+
         planetAdapter = NotifyDataSetChangedAdapter(layoutInflater)
         planetAdapter.onClickPlanet = this::onClickPlanet
 
@@ -32,6 +34,15 @@ class NotifyDataSetChangedFragment: Fragment(R.layout.notify_dataset_changed_fra
         planetAdapter.planets = dataset
     }
 
+    private fun setupClickListeners() {
+        select_all_button.setOnClickListener {
+            selectAllPlanets()
+        }
+        deselect_all_button.setOnClickListener {
+            deselectAllPlanets()
+        }
+    }
+
     private fun onClickPlanet(clickedPlanetData: PlanetUIData) {
         val currentDataSet = planetAdapter.planets
 
@@ -43,6 +54,26 @@ class NotifyDataSetChangedFragment: Fragment(R.layout.notify_dataset_changed_fra
                 .filter { it != clickedPlanetData } // Remove the clicked planet
                 .toMutableList()
                 .apply { add(updatedPlanet) } // Add the new updated clicked planet
+                .sortedBy { it.order } // Re-sort the list
+
+        planetAdapter.planets = updatedDataset
+    }
+
+    private fun selectAllPlanets() {
+        bulkSelectPlanets(true)
+    }
+
+    private fun deselectAllPlanets() {
+        bulkSelectPlanets(false)
+    }
+
+    private fun bulkSelectPlanets(shouldSelect: Boolean) {
+        val currentDataSet = planetAdapter.planets
+
+
+        val updatedDataset =
+            currentDataSet
+                .map { it.copy(isSelected = shouldSelect) }
                 .sortedBy { it.order } // Re-sort the list
 
         planetAdapter.planets = updatedDataset
